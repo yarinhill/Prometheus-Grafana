@@ -1,0 +1,55 @@
+version: "3.7"
+services:
+##Prometheus
+  prometheus:
+    container_name: prometheus
+    restart: always
+    build: ./prometheus
+    image: yarinhill/prometheus
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - /var/run/docker.sock:/var/run/docker.sock
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    ports:
+      - 9090:9090
+    networks:
+      - monitor-net
+
+##Grafana
+  grafana:
+    container_name: grafana
+    restart: always
+    build: ./grafana
+    image: yarinhill/grafana
+    volumes:
+      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
+      #- ./grafana/grafana.db:/var/lib/grafana/grafana.db
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - GF_SECURITY_ADMIN_USER=$GF_ADMIN_USER
+      - GF_SECURITY_ADMIN_PASSWORD=$GF_ADMIN_PASSWORD
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    ports:
+      - 3000:3000
+    networks:
+      - monitor-net
+
+##Loki
+  loki:
+    container_name: loki
+    restart: always
+    image: grafana/loki:latest
+    volumes:
+            - ./loki/config-loki.yml:/etc/loki/config-loki.yml
+    command: -config.file=/etc/loki/config-loki.yml
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    ports:
+      - 3100:3100
+    networks:
+      - monitor-net
+
+networks:
+  monitor-net:
