@@ -1,4 +1,4 @@
-Grafana Project
+# Grafana Project
 
 ## 1.
 
