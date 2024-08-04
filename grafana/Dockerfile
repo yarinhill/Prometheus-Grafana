@@ -4,4 +4,4 @@ USER root
 
 RUN \
     apk update && \
-    apk add docker net-tools vim curl
+    apk add net-tools vim curl

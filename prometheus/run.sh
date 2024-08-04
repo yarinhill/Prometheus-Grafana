@@ -21,8 +21,8 @@ function check_tunnel {
     done
 }
 
-nohup ssh -i /root/.ssh/id_rsa_jumpers -NT -o ServerAliveInterval=60 -oStrictHostKeyChecking=no -o ExitOnForwardFailure=yes -L 127.0.0.1:3309:127.0.0.1:3309 ec2-user@PUBLIC_IP &
-nohup ssh -i /root/.ssh/id_rsa_jumpers -NT -o ServerAliveInterval=60 -oStrictHostKeyChecking=no -o ExitOnForwardFailure=yes -L 127.0.0.1:3310:127.0.0.1:3310 ec2-user@PUBLIC_IP 
+nohup ssh -i /root/.ssh/id_rsa -NT -o ServerAliveInterval=60 -oStrictHostKeyChecking=no -o ExitOnForwardFailure=yes -L 127.0.0.1:3309:127.0.0.1:3309 ec2-user@PUBLIC_IP &
+nohup ssh -i /root/.ssh/id_rsa -NT -o ServerAliveInterval=60 -oStrictHostKeyChecking=no -o ExitOnForwardFailure=yes -L 127.0.0.1:3310:127.0.0.1:3310 ec2-user@PUBLIC_IP 
 
 
 SSH_PID=$!
