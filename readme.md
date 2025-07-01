@@ -1,4 +1,4 @@
-# Grafana & Prometheus Project
+# Prometheus & Grafana Project
 
 ## 1.
 
