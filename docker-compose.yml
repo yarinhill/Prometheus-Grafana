@@ -1,13 +1,12 @@
-version: "3.7"
 services:
-##Prometheus
+## Prometheus
   prometheus:
     container_name: prometheus
     restart: always
+    image: prom/prometheus
     build: ./prometheus
-    image: yarinhill/prometheus
-    volumes:
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    #volumes:
+    #  - ./prometheus/:/etc/prometheus/
     extra_hosts:
       - host.docker.internal:host-gateway
     ports:
@@ -15,18 +14,39 @@ services:
     networks:
       - monitor-net
 
-##Grafana
+## Alertmanager
+  alertmanager:
+    container_name: alertmanager
+    restart: always
+    image: prom/alertmanager
+    build: ./alertmanager
+    #volumes:
+    #  - ./alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml
+    environment:
+      - SMTP_EMAIL=${SMTP_EMAIL:-example@email.com}
+      - SMTP_PASSWORD=${SMTP_PASSWORD:-examplepassword}
+      - ALERT_EMAIL_TO=${ALERT_EMAIL_TO:-example@email.com}
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    ports:
+      - "9093:9093"
+    networks:
+      - monitor-net
+
+## Grafana
   grafana:
     container_name: grafana
     restart: always
+    image: grafana/grafana
     build: ./grafana
-    image: yarinhill/grafana
-    volumes:
-      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
+    #volumes:
+      #- ./grafana/grafana.ini:/etc/grafana/grafana.ini
       #- ./grafana/grafana.db:/var/lib/grafana/grafana.db
     environment:
-      - GF_SECURITY_ADMIN_USER=$GF_ADMIN_USER
-      - GF_SECURITY_ADMIN_PASSWORD=$GF_ADMIN_PASSWORD
+      - GF_SECURITY_ADMIN_USER=${GF_SECURITY_ADMIN_USER:-admin}
+      - GF_SECURITY_ADMIN_PASSWORD=${GF_SECURITY_ADMIN_PASSWORD:-admin}
+      - SMTP_EMAIL=${SMTP_EMAIL:-example@email.com}
+      - SMTP_PASSWORD=${SMTP_PASSWORD:-examplepassword}
     extra_hosts:
       - host.docker.internal:host-gateway
     ports:
@@ -34,13 +54,14 @@ services:
     networks:
       - monitor-net
 
-##Loki
+## Loki
   loki:
     container_name: loki
     restart: always
     image: grafana/loki:latest
-    volumes:
-            - ./loki/config-loki.yml:/etc/loki/config-loki.yml
+    build: ./loki
+    #volumes:
+    #  - ./loki/config-loki.yml:/etc/loki/config-loki.yml
     command: -config.file=/etc/loki/config-loki.yml
     extra_hosts:
       - host.docker.internal:host-gateway

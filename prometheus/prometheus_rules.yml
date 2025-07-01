@@ -1,0 +1,11 @@
+groups:
+  - name: example
+    rules:
+      - alert: HighCPUUsage
+        expr: process_cpu_seconds_total > 0.01
+        for: 30s
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU usage detected"
+          description: "Process CPU usage is over 0.01 for 30s."
