@@ -2,9 +2,9 @@ services:
 ## Prometheus
   prometheus:
     container_name: prometheus
-    restart: always
-    image: prom/prometheus
+    restart: always    
     build: ./prometheus
+    #image: prom/prometheus
     #volumes:
     #  - ./prometheus/:/etc/prometheus/
     extra_hosts:
@@ -18,8 +18,8 @@ services:
   alertmanager:
     container_name: alertmanager
     restart: always
-    image: prom/alertmanager
     build: ./alertmanager
+    #image: prom/alertmanager
     #volumes:
     #  - ./alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml
     environment:
@@ -37,8 +37,8 @@ services:
   grafana:
     container_name: grafana
     restart: always
-    image: grafana/grafana
     build: ./grafana
+    #image: grafana/grafana
     #volumes:
       #- ./grafana/grafana.ini:/etc/grafana/grafana.ini
       #- ./grafana/grafana.db:/var/lib/grafana/grafana.db
@@ -58,8 +58,8 @@ services:
   loki:
     container_name: loki
     restart: always
-    image: grafana/loki:latest
     build: ./loki
+    #image: grafana/loki:latest
     #volumes:
     #  - ./loki/config-loki.yml:/etc/loki/config-loki.yml
     command: -config.file=/etc/loki/config-loki.yml
