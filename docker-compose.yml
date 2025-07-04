@@ -26,8 +26,6 @@ services:
       - SMTP_EMAIL=${SMTP_EMAIL:-example@email.com}
       - SMTP_PASSWORD=${SMTP_PASSWORD:-examplepassword}
       - ALERT_EMAIL_TO=${ALERT_EMAIL_TO:-example@email.com}
-    extra_hosts:
-      - host.docker.internal:host-gateway
     ports:
       - "9093:9093"
     networks:
@@ -47,8 +45,6 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=${GF_SECURITY_ADMIN_PASSWORD:-admin}
       - SMTP_EMAIL=${SMTP_EMAIL:-example@email.com}
       - SMTP_PASSWORD=${SMTP_PASSWORD:-examplepassword}
-    extra_hosts:
-      - host.docker.internal:host-gateway
     ports:
       - 3000:3000
     networks:
@@ -63,8 +59,6 @@ services:
     #volumes:
     #  - ./loki/config-loki.yml:/etc/loki/config-loki.yml
     command: -config.file=/etc/loki/config-loki.yml
-    extra_hosts:
-      - host.docker.internal:host-gateway
     ports:
       - 3100:3100
     networks:
