@@ -1,5 +1,5 @@
 services:
-## Prometheus
+  ## Prometheus
   prometheus:
     container_name: prometheus
     restart: always    
@@ -14,7 +14,7 @@ services:
     networks:
       - monitor-net
 
-## Alertmanager
+  ## Alertmanager
   alertmanager:
     container_name: alertmanager
     restart: always
@@ -31,7 +31,7 @@ services:
     networks:
       - monitor-net
 
-## Grafana
+  ## Grafana
   grafana:
     container_name: grafana
     restart: always
@@ -50,7 +50,7 @@ services:
     networks:
       - monitor-net
 
-## Loki
+  ## Loki
   loki:
     container_name: loki
     restart: always
